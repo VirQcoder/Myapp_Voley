@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-4@!hoi!xwws^yu)h*u7k1$si_6_40ko!kvxw(hoq%2ogdgd)5!
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['viktok9i.beget.tech']
+ALLOWED_HOSTS = ['viktok9i.beget.tech', '127.0.0.1']
 
 
 # Application definition
@@ -37,6 +37,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'volleyapp.apps.VolleyappConfig',
+    'rest_framework',
+    'rest_framework_swagger',
+    'djoser',
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [
@@ -49,7 +54,20 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+DJOSER = {
+    'ACTIVATION_URL': '#/activate/{uid}/{token}',
+    'SEND_ACTIVATION_EMAIL': False,
+}
+
 ROOT_URLCONF = 'HelloDjango.urls'
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ),
+}
 
 TEMPLATES = [
     {
@@ -75,8 +93,12 @@ WSGI_APPLICATION = 'HelloDjango.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'mydbnew', #vparipwf_mydb
+        'USER': 'root',
+        'PASSWORD': 'mOrzat33!!',
+        'HOST': 'localhost',
+        'PORT': '3306',
     }
 }
 
