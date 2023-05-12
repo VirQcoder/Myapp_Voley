@@ -58,7 +58,7 @@ class Coach(models.Model):
     user = models.ForeignKey('User', models.DO_NOTHING, db_column='User_id')  # Field nameUser made lowercase.
 
     def __str__(self):
-        return f'{self.user.name} {self.user.surname}'
+        return f'{self.user.surname} {self.user.username}'
 
 
 class GameMistake(models.Model):
@@ -271,6 +271,7 @@ class Tournament(models.Model):
     start_date = models.DateField()
     date_end = models.DateField(blank=True, null=True)
     description = models.CharField(max_length=150, blank=True, null=True)
+    photo = models.ImageField(upload_to='images/', null=True)
 
     def __str__(self):
         return self.name

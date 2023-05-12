@@ -29,16 +29,43 @@ class RegistrUserView(CreateAPIView):
             return Response(data)
 
 
-class UserAPIViewSet(viewsets.ModelViewSet):
+class UserAPIViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = serializers.UserSerializer
     queryset = models.User.objects.all()
+
+
+class CoachAPIViewSet(mixins.RetrieveModelMixin,
+                      mixins.ListModelMixin,
+                      mixins.UpdateModelMixin,
+                      mixins.DestroyModelMixin,
+                      viewsets.GenericViewSet):
+    serializer_class = serializers.CoachSerializer
+    queryset = models.Coach.objects.all()
+
+
+class CoachAPIViewSet(mixins.RetrieveModelMixin,
+                      mixins.ListModelMixin,
+                      mixins.UpdateModelMixin,
+                      mixins.DestroyModelMixin,
+                      viewsets.GenericViewSet):
+    serializer_class = serializers.CoachSerializer
+    queryset = models.Coach.objects.all()
+
+
+class TypeTeamAPIViewSet(mixins.RetrieveModelMixin,
+                         mixins.ListModelMixin,
+                         mixins.UpdateModelMixin,
+                         mixins.DestroyModelMixin,
+                         viewsets.GenericViewSet):
+    serializer_class = serializers.TypeTeamSerializer
+    queryset = models.TypeTeam.objects.all()
 
 
 class TeamAPIViewSet(viewsets.ModelViewSet):
     queryset = models.Team.objects.all()
     serializer_class = serializers.TeamsSerializer
 
-    def list(self, request, *args, **kwargs):
-        res = super(TeamAPIViewSet, self).list(request, *args, **kwargs)
-        res.data = {'data': res.data}
-        return res
+
+class TournamentAPIViewSet(viewsets.ModelViewSet):
+    queryset = models.Tournament.objects.all()
+    serializer_class = serializers.TournamentsSerializer
