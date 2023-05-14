@@ -136,3 +136,33 @@ class TournamentsSerializer(serializers.ModelSerializer):
         return new_data
 
 
+class TeamsOnTournamentsSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = models.TeamOnTournament
+        fields = ['id', 'team', 'tournament', 'league', 'subgroup', 'place']
+
+    def to_representation(self, instance):
+        new_data = {
+            'id': instance.id,
+            'team': {
+                'id_team': instance.team.id,
+                'name_team': instance.team.name
+            },
+            'tournament': {
+                'id_tournament': instance.tournament.id,
+                'name_tournament': instance.tournament.name
+            },
+            'league': instance.league.league if instance.league else None,
+            'subgroup': instance.subgroup.subgroup if instance.subgroup else None,
+            'place': instance.place
+        }
+        return new_data
+
+
+class TournamentsOnTeam(serializers.ModelSerializer):
+    pass
+
+
+
+

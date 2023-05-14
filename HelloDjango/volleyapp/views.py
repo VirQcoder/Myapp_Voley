@@ -1,7 +1,9 @@
+from django.http import Http404
 from django.shortcuts import render
 from rest_framework import generics, viewsets, status, mixins
 from rest_framework.generics import CreateAPIView
 from rest_framework.permissions import AllowAny
+from rest_framework.views import APIView
 from rest_framework.viewsets import GenericViewSet
 
 from . import models, serializers
@@ -69,3 +71,21 @@ class TeamAPIViewSet(viewsets.ModelViewSet):
 class TournamentAPIViewSet(viewsets.ModelViewSet):
     queryset = models.Tournament.objects.all()
     serializer_class = serializers.TournamentsSerializer
+
+
+class TeamsOnTournamentsAPIView(generics.ListAPIView):
+    serializer_class = serializers.TeamsOnTournamentsSerializer
+
+    def get_queryset(self):
+        tournament_id = self.kwargs['pk']
+        queryset = models.TeamOnTournament.objects.filter(tournament_id=tournament_id)
+        return queryset
+
+
+class TournamentsOnTeam(generics.ListAPIView):
+    serializer_class = serializers.TeamsOnTournamentsSerializer
+
+    def get_queryset(self):
+        team_id = self.kwargs['pk']
+        queryset = models.TeamOnTournament.objects.filter(team_id=team_id)
+        return queryset

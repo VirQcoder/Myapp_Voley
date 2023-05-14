@@ -22,5 +22,9 @@ urlpatterns = [
              path('', include(routers.routerCoach.urls), name='coach'),
              path('', include(routers.routerTypeTeam.urls), name='type_team'),
              path('', include(routers.routerTournaments.urls), name='tournaments'),
+             path('teams-on-tournament/<int:pk>', views.TeamsOnTournamentsAPIView.as_view(),
+                  name='teams_on_tournament_list'),
+             path('tournaments-on-team/<int:pk>', views.TournamentsOnTeam.as_view(),
+                  name='tournaments-on-team_list'),
          ]))
 ]
