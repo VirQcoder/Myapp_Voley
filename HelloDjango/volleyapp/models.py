@@ -148,7 +148,7 @@ class Player(models.Model):
     user = models.ForeignKey('User', models.DO_NOTHING, db_column='User_id')  # Field nameUser made lowercase.
 
     def __str__(self):
-        return f'{self.team.name} - {self.user.surname} {self.user.name}'
+        return f'{self.team.name} - {self.user.surname} {self.user.username}'
 
 
 class PlayerHasCards(models.Model):

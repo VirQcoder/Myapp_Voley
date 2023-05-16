@@ -1,3 +1,4 @@
+from aiohttp.web_routedef import view
 from django.urls import path, include
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view as swagger_get_shema_view
@@ -17,14 +18,16 @@ urlpatterns = [
          include([
              path('swagger/', shema_view.with_ui('swagger', cache_timeout=0)),  # Все апишки
              path('', include(routers.routerUser.urls)),
-             path('registr/', views.RegistrUserView.as_view(), name='registr'),
+             path('register/', views.RegistrUserView.as_view(), name='register'),
              path('', include(routers.routerTeams.urls), name='teams'),
              path('', include(routers.routerCoach.urls), name='coach'),
-             path('', include(routers.routerTypeTeam.urls), name='type_team'),
+             path('teams/type', views.TypeTeamAPIViewSet.as_view(), name='type_team'),
              path('', include(routers.routerTournaments.urls), name='tournaments'),
-             path('teams-on-tournament/<int:pk>', views.TeamsOnTournamentsAPIView.as_view(),
+             path('tournaments/on-teams/<int:tournament_id>', views.TeamsOnTournamentsAPIView.as_view(),
                   name='teams_on_tournament_list'),
-             path('tournaments-on-team/<int:pk>', views.TournamentsOnTeam.as_view(),
+             path('teams/on-tournaments/<int:team_id>', views.TournamentsOnTeamAPIView.as_view(),
                   name='tournaments-on-team_list'),
+             path('teams/players/<int:team_id>', views.PlayersOnTeamAPIView.as_view(), name='players'),
+             path('', include(routers.routerJudge.urls), name='judge')
          ]))
 ]

@@ -54,11 +54,7 @@ class CoachAPIViewSet(mixins.RetrieveModelMixin,
     queryset = models.Coach.objects.all()
 
 
-class TypeTeamAPIViewSet(mixins.RetrieveModelMixin,
-                         mixins.ListModelMixin,
-                         mixins.UpdateModelMixin,
-                         mixins.DestroyModelMixin,
-                         viewsets.GenericViewSet):
+class TypeTeamAPIViewSet(generics.ListAPIView):
     serializer_class = serializers.TypeTeamSerializer
     queryset = models.TypeTeam.objects.all()
 
@@ -77,15 +73,34 @@ class TeamsOnTournamentsAPIView(generics.ListAPIView):
     serializer_class = serializers.TeamsOnTournamentsSerializer
 
     def get_queryset(self):
-        tournament_id = self.kwargs['pk']
+        tournament_id = self.kwargs['tournament_id']
         queryset = models.TeamOnTournament.objects.filter(tournament_id=tournament_id)
         return queryset
 
 
-class TournamentsOnTeam(generics.ListAPIView):
+class TournamentsOnTeamAPIView(generics.ListAPIView):
     serializer_class = serializers.TeamsOnTournamentsSerializer
 
     def get_queryset(self):
-        team_id = self.kwargs['pk']
+        team_id = self.kwargs['team_id']
         queryset = models.TeamOnTournament.objects.filter(team_id=team_id)
         return queryset
+
+
+class PlayersOnTeamAPIView(generics.ListAPIView):
+    serializer_class = serializers.PlayersOnTeamSerializer
+
+    def get_queryset(self):
+        team_id = self.kwargs['team_id']  # Получение идентификатора команды из URL
+        queryset = models.Player.objects.filter(team_id=team_id)
+        return queryset
+
+
+class JudgeAPIView(mixins.RetrieveModelMixin,
+                    mixins.ListModelMixin,
+                    mixins.UpdateModelMixin,
+                    mixins.DestroyModelMixin,
+                    viewsets.GenericViewSet):
+    queryset = models.Judge.objects.all()
+    serializer_class = serializers.JudgeSerializer
+

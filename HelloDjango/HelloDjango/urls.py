@@ -21,5 +21,5 @@ from drf_yasg.views import get_schema_view as swagger_get_shema_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('volley/', include('volleyapp.urls'))
+    path('volley/', include('volleyapp.urls')),
 ]

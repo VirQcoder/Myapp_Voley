@@ -160,9 +160,32 @@ class TeamsOnTournamentsSerializer(serializers.ModelSerializer):
         return new_data
 
 
-class TournamentsOnTeam(serializers.ModelSerializer):
-    pass
+class PlayersOnTeamSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = models.Player
+        fields = '__all__'
+
+    def to_representation(self, instance):
+        new_data = {
+            'id': instance.id,
+            'is_captain': instance.is_captain,
+            'amplua': instance.amplua.amplua,
+            'team': instance.team.name,
+            'user': {
+                'id_user': instance.user.id,
+                'name': instance.user.username,
+                'surname': instance.user.surname,
+            },
+            'game_number': instance.game_number
+        }
+        return new_data
 
 
+class JudgeSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = models.Judge
+        fields = '__all__'
 
 
