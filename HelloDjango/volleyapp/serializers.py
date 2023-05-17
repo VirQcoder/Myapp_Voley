@@ -182,10 +182,29 @@ class PlayersOnTeamSerializer(serializers.ModelSerializer):
         return new_data
 
 
+class PlayersSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = models.Player
+        fields = '__all__'
+
+
 class JudgeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Judge
         fields = '__all__'
+
+    def to_representation(self, instance):
+        new_data = {
+            'id': instance.id,
+            'category': instance.category,
+            'user': {
+                'user_id': instance.user.id,
+                'name': instance.user.username,
+                'surname': instance.user.surname
+            }
+        }
+        return new_data
 
 

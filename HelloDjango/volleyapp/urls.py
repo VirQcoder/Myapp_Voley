@@ -21,13 +21,13 @@ urlpatterns = [
              path('register/', views.RegistrUserView.as_view(), name='register'),
              path('', include(routers.routerTeams.urls), name='teams'),
              path('', include(routers.routerCoach.urls), name='coach'),
-             path('teams/type', views.TypeTeamAPIViewSet.as_view(), name='type_team'),
+             path('teams/type/', views.TypeTeamAPIViewSet.as_view(), name='type_team'),
              path('', include(routers.routerTournaments.urls), name='tournaments'),
-             path('tournaments/on-teams/<int:tournament_id>', views.TeamsOnTournamentsAPIView.as_view(),
+             path('tournaments/<int:tournament_id>/on-teams/', views.TeamsOnTournamentsAPIView.as_view(),
                   name='teams_on_tournament_list'),
-             path('teams/on-tournaments/<int:team_id>', views.TournamentsOnTeamAPIView.as_view(),
-                  name='tournaments-on-team_list'),
-             path('teams/players/<int:team_id>', views.PlayersOnTeamAPIView.as_view(), name='players'),
+             path('teams/<int:team_id>/on-tournaments/', views.TournamentsOnTeamAPIView.as_view(),
+                  name='tournaments-on-team_list/'),
+             path('teams/<int:team_id>/players/', views.PlayersOnTeamAPIView.as_view(), name='players'),
              path('', include(routers.routerJudge.urls), name='judge')
          ]))
 ]
