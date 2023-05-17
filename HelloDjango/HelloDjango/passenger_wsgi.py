@@ -9,8 +9,8 @@ https://docs.djangoproject.com/en/4.1/howto/deployment/wsgi/
 
 import os, sys
 site_user_root_dir = '/home/v/viktok9i/viktok9i.beget.tech/public_html'
-sys.path.insert(0, site_user_root_dir + '/HelloDjango')
-sys.path.insert(1, '/home/v/viktok9i/.local/lib/python3.11/site-packages')
+sys.path.insert(0, site_user_root_dir + '/Myapp_Voley/HelloDjango')
+sys.path.insert(1, site_user_root_dir + '/venv/bin/python3.11/site-packages')
 
 from django.core.wsgi import get_wsgi_application
 
