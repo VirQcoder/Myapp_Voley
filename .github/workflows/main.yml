@@ -22,7 +22,7 @@ jobs:
           pip install -r HelloDjango/requirements.txt
 
       - name: Collect static files
-        run: python /HelloDjango/manage.py collectstatic --noinput
+        run: python HelloDjango/manage.py collectstatic --noinput
 
       - name: Deploy to Beget
         uses: appleboy/scp-action@master
