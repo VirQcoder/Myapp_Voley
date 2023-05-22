@@ -10,6 +10,20 @@ from . import models, serializers
 from rest_framework.response import Response
 
 
+class BaseModelAPIViewSet(viewsets.ModelViewSet):
+    def list(self, request, *args, **kwargs):
+        response = super().list(request, *args, **kwargs)
+        response.data = {'data': response.data}
+        return response
+
+
+class BaseGenericAPIViewSet(generics.ListAPIView):
+    def list(self, request, *args, **kwargs):
+        response = super().list(request, *args, **kwargs)
+        response.data = {'data': response.data}
+        return response
+
+
 class RegistrUserView(CreateAPIView):
     queryset = models.User.objects.all()
     serializer_class = serializers.UserRegistrSerializer
@@ -35,14 +49,10 @@ class UserAPIViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = serializers.UserSerializer
     queryset = models.User.objects.all()
 
-
-class CoachAPIViewSet(mixins.RetrieveModelMixin,
-                      mixins.ListModelMixin,
-                      mixins.UpdateModelMixin,
-                      mixins.DestroyModelMixin,
-                      viewsets.GenericViewSet):
-    serializer_class = serializers.CoachSerializer
-    queryset = models.Coach.objects.all()
+    def list(self, request, *args, **kwargs):
+        res = super(UserAPIViewSet, self).list(request, *args, **kwargs)
+        res.data = {'data': res.data}
+        return res
 
 
 class CoachAPIViewSet(mixins.RetrieveModelMixin,
@@ -53,23 +63,28 @@ class CoachAPIViewSet(mixins.RetrieveModelMixin,
     serializer_class = serializers.CoachSerializer
     queryset = models.Coach.objects.all()
 
+    def list(self, request, *args, **kwargs):
+        res = super(CoachAPIViewSet, self).list(request, *args, **kwargs)
+        res.data = {'data': res.data}
+        return res
 
-class TypeTeamAPIViewSet(generics.ListAPIView):
+
+class TypeTeamAPIViewSet(BaseGenericAPIViewSet):
     serializer_class = serializers.TypeTeamSerializer
     queryset = models.TypeTeam.objects.all()
 
 
-class TeamAPIViewSet(viewsets.ModelViewSet):
+class TeamAPIViewSet(BaseModelAPIViewSet):
     queryset = models.Team.objects.all()
     serializer_class = serializers.TeamsSerializer
 
 
-class TournamentAPIViewSet(viewsets.ModelViewSet):
+class TournamentAPIViewSet(BaseModelAPIViewSet):
     queryset = models.Tournament.objects.all()
     serializer_class = serializers.TournamentsSerializer
 
 
-class TeamsOnTournamentsAPIView(generics.ListAPIView):
+class TeamsOnTournamentsAPIView(BaseGenericAPIViewSet):
     serializer_class = serializers.TeamsOnTournamentsSerializer
 
     def get_queryset(self):
@@ -78,7 +93,7 @@ class TeamsOnTournamentsAPIView(generics.ListAPIView):
         return queryset
 
 
-class TournamentsOnTeamAPIView(generics.ListAPIView):
+class TournamentsOnTeamAPIView(BaseGenericAPIViewSet):
     serializer_class = serializers.TeamsOnTournamentsSerializer
 
     def get_queryset(self):
@@ -87,7 +102,7 @@ class TournamentsOnTeamAPIView(generics.ListAPIView):
         return queryset
 
 
-class PlayersOnTeamAPIView(generics.ListAPIView):
+class PlayersOnTeamAPIView(BaseGenericAPIViewSet):
     serializer_class = serializers.PlayersOnTeamSerializer
 
     def get_queryset(self):
@@ -97,10 +112,14 @@ class PlayersOnTeamAPIView(generics.ListAPIView):
 
 
 class JudgeAPIView(mixins.RetrieveModelMixin,
-                    mixins.ListModelMixin,
-                    mixins.UpdateModelMixin,
-                    mixins.DestroyModelMixin,
-                    viewsets.GenericViewSet):
+                   mixins.ListModelMixin,
+                   mixins.UpdateModelMixin,
+                   mixins.DestroyModelMixin,
+                   viewsets.GenericViewSet):
     queryset = models.Judge.objects.all()
     serializer_class = serializers.JudgeSerializer
 
+    def list(self, request, *args, **kwargs):
+        res = super(JudgeAPIView, self).list(request, *args, **kwargs)
+        res.data = {'data': res.data}
+        return res

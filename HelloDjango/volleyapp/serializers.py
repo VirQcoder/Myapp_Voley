@@ -100,7 +100,7 @@ class TeamsSerializer(serializers.ModelSerializer):
                 'sponsor': instance.sponsor,
                 'sponsor_logo': instance.sponsor_logo,
             },
-            'type': self.fields['type'].to_representation(instance.type),
+            'type': instance.type.type if instance.type else None,
             'coach': {
                 'user_id': instance.coach.user.id,
                 'name': instance.coach.user.username,
@@ -206,5 +206,3 @@ class JudgeSerializer(serializers.ModelSerializer):
             }
         }
         return new_data
-
-
